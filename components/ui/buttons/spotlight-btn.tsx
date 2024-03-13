@@ -1,10 +1,7 @@
 import React, { useEffect } from 'react';
 
 export const SpotlightBtn = () => {
-    const [x, setX] = React.useState(0);
-    useEffect(() => {
-        console.log(x);
-    }, [x]);
+    const [x, setX] = React.useState(50);
     return (
         <button
             onMouseMove={(e) => {
@@ -27,7 +24,7 @@ export const SpotlightBtn = () => {
                     left: `${x}%`,
                 }}
                 className="
-            left-[50%]
+            
             absolute w-32 h-32 rounded-full bg-white top-1/2  -translate-x-1/2 -translate-y-1/2"
             />
         </button>
