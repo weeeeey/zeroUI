@@ -10,12 +10,13 @@ import { ShinyBtn } from '@/components/ui/buttons/shiny-btn';
 import { SpotlightBtn } from '@/components/ui/buttons/spotlight-btn';
 import { HoverDev } from '@/components/ui/cards/hover-dev';
 import { HoverTilt } from '@/components/ui/cards/hover-tilt';
+import { Layout } from '@/components/ui/cards/reveal';
 import { Squishy } from '@/components/ui/cards/squishy';
 
 const MainPage = () => {
     return (
-        <div className="bg-white w-full h-full  flex justify-center items-center px-20 py-10">
-            <HoverDev />
+        <div className="bg-black w-full h-auto  flex justify-center items-center px-20 py-10">
+            <Layout />
         </div>
     );
 };
