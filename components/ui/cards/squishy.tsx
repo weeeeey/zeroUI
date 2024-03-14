@@ -5,12 +5,6 @@ import React from 'react';
 const TEXT =
     'Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat, rem.';
 
-const variants = {
-    hover: {
-        rotateX: '70deg',
-    },
-};
-
 export const Squishy = () => {
     return (
         <motion.div
