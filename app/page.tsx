@@ -1,5 +1,6 @@
 'use client';
 
+import { Basic } from '@/components/ui/accordians/basic';
 import { Vertical } from '@/components/ui/accordians/vertical';
 import { DrawOutlineBtn } from '@/components/ui/buttons/draw-outline-btn';
 import { NeubrutalismBtn } from '@/components/ui/buttons/neubrutalism-btn';
@@ -10,7 +11,7 @@ import { SpotlightBtn } from '@/components/ui/buttons/spotlight-btn';
 const MainPage = () => {
     return (
         <div className="bg-white w-full h-full  flex justify-center items-center px-20 py-10">
-            <Vertical />
+            <Basic />
         </div>
     );
 };

@@ -1,7 +1,16 @@
 'use client';
-import { DollarSign } from 'lucide-react';
+import { BarChart, Bell, DollarSign, LucideIcon, Play } from 'lucide-react';
 import Image from 'next/image';
 import React, { useState } from 'react';
+
+interface VerticalItemProps {
+    onClick: (id: number) => void;
+    selectedId: number;
+    idx: number;
+    title: string;
+    imgSrc: string;
+    icon: LucideIcon;
+}
 
 const VerticalItem = ({
     imgSrc,
@@ -9,20 +18,15 @@ const VerticalItem = ({
     idx,
     onClick,
     selectedId,
-}: {
-    onClick: (id: number) => void;
-    selectedId: number;
-    idx: number;
-    title: string;
-    imgSrc: string;
-}) => {
+    icon: Icon,
+}: VerticalItemProps) => {
     return (
         <div className="flex flex-col border-black border ">
             <button
                 onClick={() => onClick(idx)}
                 className="py-3 px-2 flex items-center "
             >
-                <DollarSign className="w-7 h-7 bg-indigo-500 text-white px-1 mr-2" />
+                <Icon className="w-7 h-7 bg-indigo-500 text-white px-1 mr-2" />
                 <span className="text-2xl">{title}</span>
             </button>
             <div
@@ -58,6 +62,7 @@ const VerticalLayout = () => {
                 idx={0}
                 title="Earn more"
                 imgSrc="/vertical/1.webp"
+                icon={DollarSign}
             />
             <VerticalItem
                 onClick={handleClick}
@@ -65,6 +70,7 @@ const VerticalLayout = () => {
                 idx={1}
                 title="Play more"
                 imgSrc="/vertical/s4-day.jpg"
+                icon={Play}
             />
 
             <VerticalItem
@@ -73,6 +79,7 @@ const VerticalLayout = () => {
                 idx={2}
                 title="Keep track"
                 imgSrc="/vertical/sec.jpg"
+                icon={Bell}
             />
             <VerticalItem
                 onClick={handleClick}
@@ -80,6 +87,7 @@ const VerticalLayout = () => {
                 idx={3}
                 title="Grow faster"
                 imgSrc="/vertical/header.webp"
+                icon={BarChart}
             />
         </div>
     );
