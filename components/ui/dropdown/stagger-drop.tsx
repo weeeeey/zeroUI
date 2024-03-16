@@ -10,6 +10,51 @@ import {
 } from 'lucide-react';
 import React, { useState } from 'react';
 
+const Wrappervariants = {
+    visible: {
+        scaleY: 1,
+        transition: {
+            staggerChildren: 0.1,
+            when: 'beforeChildren',
+        },
+    },
+    hidden: {
+        scaleY: 0,
+        transition: {
+            staggerChildren: 0.1,
+            when: 'afterChildren',
+        },
+    },
+};
+
+const IconVariants = {
+    visible: {
+        y: 0,
+        scale: 1,
+    },
+    hidden: {
+        y: -10,
+        scale: 0,
+    },
+};
+
+const ItemVariants = {
+    visible: {
+        opacity: 1,
+        y: 0,
+        transition: {
+            when: 'beforeChildren',
+        },
+    },
+    hidden: {
+        opacity: 0,
+        y: -15,
+        transition: {
+            when: 'afterChildren',
+        },
+    },
+};
+
 export const StaggerDropLayout = () => {
     return (
         <div className="w-full h-[calc(100vh-5rem)] bg-white">
@@ -18,21 +63,6 @@ export const StaggerDropLayout = () => {
             </nav>
         </div>
     );
-};
-
-const variants = {
-    visible: {
-        y: 0,
-        opacity: 1,
-        transition: {
-            staggerChildren: 0.7,
-            delayChildren: 0.5,
-        },
-    },
-    hidden: {
-        y: -10,
-        opacity: 0,
-    },
 };
 
 const StaggerDropSwitch = ({ title }: { title: string }) => {
@@ -48,17 +78,18 @@ const StaggerDropSwitch = ({ title }: { title: string }) => {
             className="relative "
         >
             <StaggerDropItem text={title} handleClick={handleClick} />
-            <StaggerDropContent isClick={isClick} />
+            <StaggerDropContent />
         </motion.div>
     );
 };
 
-interface StaggerDropItemProps {
+const StaggerDropItem = ({
+    text,
+    handleClick,
+}: {
     text: string;
     handleClick: () => void;
-}
-
-const StaggerDropItem = ({ text, handleClick }: StaggerDropItemProps) => {
+}) => {
     return (
         <button
             onClick={handleClick}
@@ -70,18 +101,15 @@ const StaggerDropItem = ({ text, handleClick }: StaggerDropItemProps) => {
     );
 };
 
-interface StaggerDropContentProps {
-    isClick: boolean;
-}
-function StaggerDropContent({ isClick }: StaggerDropContentProps) {
+function StaggerDropContent() {
     return (
         <motion.div
-            initial={{
-                y: -10,
-                opacity: 0,
+            initial={Wrappervariants.hidden}
+            variants={Wrappervariants}
+            style={{
+                translateX: '-50%',
             }}
-            variants={variants}
-            className=" absolute top-[110%] left-0 shadow-xl p-2 rounded-xl  flex flex-col justify-between items-start space-y-3"
+            className="flex flex-col gap-2 p-2 rounded-lg bg-white shadow-xl absolute top-[120%] left-[50%] w-48  overflow-hidden"
         >
             <ContentIem text="Edit" icon={SquarePen} />
             <ContentIem text="Duplicate" icon={SquarePlus} />
@@ -100,11 +128,14 @@ const ContentIem = ({
 }) => {
     return (
         <motion.div
-            variants={variants}
-            className="text-slate-600 px-2 flex items-center justify-start"
+            variants={ItemVariants}
+            className="text-slate-600 px-2 whitespace-nowrap pr-20 flex items-center justify-start"
         >
-            <Icon className="w-4 h-4 mr-2" />
-            <span className="font-semibold">{text}</span>
+            <motion.div variants={IconVariants}>
+                <Icon className="w-4 h-4 mr-2" />
+            </motion.div>
+
+            <span>{text}</span>
         </motion.div>
     );
 };
