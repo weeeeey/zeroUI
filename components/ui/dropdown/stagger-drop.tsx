@@ -27,17 +27,6 @@ const Wrappervariants = {
     },
 };
 
-const IconVariants = {
-    visible: {
-        y: 0,
-        scale: 1,
-    },
-    hidden: {
-        y: -10,
-        scale: 0,
-    },
-};
-
 const ItemVariants = {
     visible: {
         opacity: 1,
@@ -52,6 +41,17 @@ const ItemVariants = {
         transition: {
             when: 'afterChildren',
         },
+    },
+};
+
+const IconVariants = {
+    visible: {
+        y: 0,
+        scale: 1,
+    },
+    hidden: {
+        y: -10,
+        scale: 0,
     },
 };
 
