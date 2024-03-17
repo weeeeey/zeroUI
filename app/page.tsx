@@ -1,5 +1,6 @@
 'use client';
 
+import { ShuffleLayout } from '@/components/ui/cards/shuffle';
 import { FlyoutLayout } from '@/components/ui/dropdown/flyout';
 import { ClipPathLayout } from '@/components/ui/links/clip-path';
 import { TakeoverLayout } from '@/components/ui/links/takeover';

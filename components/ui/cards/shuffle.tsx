@@ -23,7 +23,7 @@ export const Shuffle = ({ idx }: ShffleProps) => {
     useEffect(() => {
         const interval = setInterval(() => {
             setNext((next) => (next + 2) % 3);
-        }, 2000);
+        }, 3000);
         return () => clearInterval(interval);
     }, []);
     useEffect(() => {
@@ -38,6 +38,14 @@ export const Shuffle = ({ idx }: ShffleProps) => {
                 translateX: `${-50 + (next - 1) * 25}%`,
                 translateY: `-50%`,
                 rotateZ: `${(next - 1) * 10}deg`,
+            }}
+            drag
+            dragSnapToOrigin
+            dragConstraints={{
+                left: -50,
+                right: 50,
+                top: -50,
+                bottom: 50,
             }}
             className={`w-1/3 h-[80%]  border rounded-xl flex flex-col items-center justify-center space-y-4 px-20 bg-slate-800/20 backdrop-blur-md  transition-all duration-500 absolute top-1/2 left-1/2 `}
         >
