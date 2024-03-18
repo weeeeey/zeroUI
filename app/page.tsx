@@ -1,14 +1,11 @@
 'use client';
 
-import { ShuffleLayout } from '@/components/ui/cards/shuffle';
-import { FlyoutLayout } from '@/components/ui/dropdown/flyout';
-import { ClipPathLayout } from '@/components/ui/links/clip-path';
-import { TakeoverLayout } from '@/components/ui/links/takeover';
+import { HoverImageLayout } from '@/components/ui/links/hover-image';
 
 const MainPage = () => {
     return (
         <div className="bg-white h-full w-full flex justify-center items-center p-10">
-            <TakeoverLayout />
+            <HoverImageLayout />
         </div>
     );
 };
