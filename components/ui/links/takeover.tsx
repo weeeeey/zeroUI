@@ -5,7 +5,7 @@ import React, { useEffect } from 'react';
 
 export const TakeoverLayout = () => {
     return (
-        <div className="w-full h-full bg-black  transition-all flex flex-col justify-center items-center  relative">
+        <div className="w-full h-full overflow-hidden bg-black  transition-all flex flex-col justify-center items-center  relative">
             <Polygon />
             <TakeoverContent text="art" />
             <TakeoverContent text="design" />
@@ -22,8 +22,11 @@ const TakeoverContent = ({ text }: { text: string }) => {
     };
 
     return (
-        <motion.div animate={isHover ? 'hover' : ''}>
-            {/* <TakeoverBackground imgSrc="/images/hero.jpg" /> */}
+        <motion.div
+            // className="overflow-hidden"
+            animate={isHover ? 'hover' : ''}
+        >
+            <TakeoverBackground imgSrc="/images/hero.jpg" />
 
             <TakeoverLink text={text} handleHover={handleHover} />
         </motion.div>
@@ -32,7 +35,21 @@ const TakeoverContent = ({ text }: { text: string }) => {
 
 const TakeoverBackground = ({ imgSrc }: { imgSrc: string }) => {
     return (
-        <motion.div className="absolute inset-0 bg-red-300 w-full h-full"></motion.div>
+        <motion.div
+            variants={{
+                hover: {
+                    translateY: '-100%',
+                    transition: {
+                        duration: 2,
+                        ease: 'easeInOut',
+                    },
+                },
+            }}
+            className="absolute top-[100%] left-0 w-full h-[200vh]  "
+        >
+            <div className="w-full h-[100vh] bg-slate-300" />
+            <div className="w-full h-[100vh]  bg-slate-800" />
+        </motion.div>
     );
 };
 
@@ -49,7 +66,7 @@ const TakeoverLink = ({
             onHoverEnd={() => handleHover(false)}
             whileHover="hover"
             transition={{
-                staggerChildren: 0.2,
+                staggerChildren: 0.15,
             }}
             className="uppercase font-extrabold text-4xl text-white mix-blend-difference overflow-hidden relative my-3 cursor-pointer z-20"
         >
@@ -59,7 +76,6 @@ const TakeoverLink = ({
                         variants={{
                             hover: {
                                 translateY: '-100%',
-                                transitionDuration: '0.5',
                             },
                         }}
                         key={index}
