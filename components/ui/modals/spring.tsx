@@ -54,7 +54,7 @@ const SpringModal = ({
                     animate={isOpen ? 'open' : 'closed'}
                     variants={wrapperVariants}
                     onClick={onClose}
-                    className={`fixed backdrop-blur-sm w-full h-full flex justify-center items-center `}
+                    className={`fixed backdrop-blur-sm inset-0 flex justify-center items-center `}
                 >
                     <motion.div
                         initial={{
