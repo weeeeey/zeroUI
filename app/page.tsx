@@ -1,16 +1,12 @@
 'use client';
 
-import { BeamLayout } from '@/components/ui/inputs/beam';
-import { HoverImageLayout } from '@/components/ui/links/hover-image';
-import Example from '@/components/ui/loaders/cutout';
-import { PathFinder } from '@/components/ui/loaders/path-finder';
-import { SpringLayout } from '@/components/ui/modals/spring';
-import { MorphSteppedLayout } from '@/components/ui/progress/morph-stepped';
+import { BubbleTextLayout } from '@/components/ui/bubble-text';
+import WaterDropGrid from '@/components/ui/water-drop';
 
 const MainPage = () => {
     return (
-        <div className="bg-black h-full w-full flex justify-center items-center p-10">
-            <MorphSteppedLayout />
+        <div className="bg-white h-full w-full flex justify-center items-center p-10">
+            <BubbleTextLayout />
         </div>
     );
 };
