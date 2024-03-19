@@ -29,7 +29,7 @@ const BubbleText = () => {
                             ? {
                                   fontWeight:
                                       400 * (2 - Math.abs(hoverIdx - i)),
-                                  color: 'rgb(199, 210, 254)',
+                                  color: 'rgb(201, 208, 238)',
                               }
                             : { fontWeight: 100 }
                     }
