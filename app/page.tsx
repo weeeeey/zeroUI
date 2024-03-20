@@ -1,13 +1,12 @@
 'use client';
 
-import { BubbleTextLayout } from '@/components/ui/bubble-text';
-import { ChipTabLayout } from '@/components/ui/tabs/chip-tab';
-import WaterDropGrid from '@/components/ui/water-drop';
+import { FitTextLayout } from '@/components/ui/text/fit-text';
+import { VanishLayout } from '@/components/ui/text/vanish';
 
 const MainPage = () => {
     return (
         <div className="bg-white h-full w-full flex justify-center items-center p-10">
-            <ChipTabLayout />
+            <FitTextLayout />
         </div>
     );
 };
