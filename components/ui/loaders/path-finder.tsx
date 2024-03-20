@@ -1,5 +1,6 @@
 'use client';
 import { findPath } from '@/lib/findPath';
+import { motion } from 'framer-motion';
 import React, { useEffect, useRef, useState } from 'react';
 
 export interface INode {
@@ -9,7 +10,7 @@ export interface INode {
 
 export const PathFinder = () => {
     const [path, setPath] = useState<INode[]>();
-
+    const [isHover, setIsHover] = useState(-1);
     const containerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -57,8 +58,24 @@ export const PathFinder = () => {
                                     : '';
 
                             return (
-                                <div
-                                    className={`border ${cellClass}`}
+                                <motion.div
+                                    onHoverStart={() =>
+                                        setIsHover(colIdx + idx * 30)
+                                    }
+                                    onHoverEnd={() => setIsHover(-1)}
+                                    animate={
+                                        isHover === colIdx + idx * 30
+                                            ? {
+                                                  backgroundColor: 'rgb(0,0,0)',
+                                                  transition: { duration: 0.3 },
+                                              }
+                                            : {
+                                                  backgroundColor:
+                                                      'rgb(96 165 250)',
+                                                  transition: { duration: 10 },
+                                              }
+                                    }
+                                    className={`border ${cellClass} `}
                                     key={colIdx + idx * 30}
                                 />
                             );
