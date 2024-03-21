@@ -1,5 +1,6 @@
 'use client';
 
+import { Aaa } from '@/components/aaa';
 import { CollapseCardLayout } from '@/components/ui/collapse-card';
 import { DisappearLayout } from '@/components/ui/disappeat';
 import { CustomKanban } from '@/components/ui/dnd';
@@ -13,7 +14,7 @@ import { WaterDropHeroLayout } from '@/components/ui/water-drop-hero';
 const MainPage = () => {
     return (
         <div className="w-full h-full flex justify-center items-center p-20 ">
-            <CollapseCardLayout />
+            <Aaa />
         </div>
     );
 };

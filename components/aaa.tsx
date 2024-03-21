@@ -1,117 +1,80 @@
 'use client';
 import { motion } from 'framer-motion';
-import {
-    ChevronDown,
-    LucideIcon,
-    ShareIcon,
-    SquarePen,
-    SquarePlus,
-    Trash,
-} from 'lucide-react';
 
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
-const StaggeredDropDown = () => {
-    const [open, setOpen] = useState(false);
+import React from 'react';
+
+interface MouseProps {
+    x: number;
+    y: number;
+}
+// const lerp = (start: number, end: number, a: number) => {
+//     return (end - start) * a + start;
+// };
+
+const lerp = (x: number, y: number, a: number) => x * (1 - a) + y * a;
+export const Aaa = () => {
+    const [mouse, setMouse] = useState<MouseProps>({ x: 0, y: 0 });
+    const [lerpMouse, setLerpMouse] = useState<MouseProps>({ x: 0, y: 0 });
+
+    const ref = React.useRef<HTMLDivElement>(null);
+    const mouseRef = React.useRef<HTMLDivElement>(null);
+
+    const rafId = React.useRef(0);
+
+    const handleMouseMover = (e: React.MouseEvent<HTMLDivElement>) => {
+        if (
+            e.clientX < e.currentTarget.offsetLeft ||
+            e.clientX >
+                e.currentTarget.offsetLeft + e.currentTarget.offsetWidth ||
+            e.clientY < e.currentTarget.offsetTop ||
+            e.clientY > e.currentTarget.offsetTop + e.currentTarget.offsetHeight
+        ) {
+            setMouse({
+                x: ref.current?.offsetWidth! / 2,
+                y: ref.current?.offsetHeight! / 2,
+            });
+        } else {
+            setMouse({
+                x: e.clientX - ref.current?.offsetLeft!,
+                y: e.clientY - ref.current?.offsetTop!,
+            });
+        }
+    };
+
+    const animate = useCallback(() => {
+        setLerpMouse((p) => ({
+            x: lerp(p.x, mouse.x, 0.1),
+            y: lerp(p.y, mouse.y, 0.1),
+        }));
+
+        rafId.current = window.requestAnimationFrame(animate);
+    }, [mouse]);
+
+    useEffect(() => {
+        animate();
+        return () => {
+            cancelAnimationFrame(rafId.current);
+        };
+    }, [animate]);
 
     return (
-        <div className="p-8 pb-56 flex items-center justify-center bg-white">
-            <motion.div animate={open ? 'open' : 'closed'} className="relative">
-                <button
-                    onClick={() => setOpen((pv) => !pv)}
-                    className="flex items-center gap-2 px-3 py-2 rounded-md text-indigo-50 bg-indigo-500 hover:bg-indigo-500 transition-colors"
-                >
-                    <span className="font-medium text-sm">Post actions</span>
-                    <motion.span variants={iconVariants}>
-                        <ChevronDown />
-                    </motion.span>
-                </button>
-
-                <motion.ul
-                    initial={wrapperVariants.closed}
-                    variants={wrapperVariants}
-                    style={{ originY: 'top', translateX: '-50%' }}
-                    className="flex flex-col gap-2 p-2 rounded-lg bg-white shadow-xl absolute top-[120%] left-[50%] w-48 overflow-hidden"
-                >
-                    <Option setOpen={setOpen} Icon={SquarePen} text="Edit" />
-                    <Option
-                        setOpen={setOpen}
-                        Icon={SquarePlus}
-                        text="Duplicate"
-                    />
-                    <Option setOpen={setOpen} Icon={ShareIcon} text="Share" />
-                    <Option setOpen={setOpen} Icon={Trash} text="Remove" />
-                </motion.ul>
-            </motion.div>
+        <div
+            ref={ref}
+            onMouseMove={handleMouseMover}
+            className=" w-full h-full bg-black relative"
+        >
+            <motion.div
+                ref={mouseRef}
+                style={{
+                    x: lerpMouse.x,
+                    y: lerpMouse.y,
+                    translateX: '-50%',
+                    translateY: '-50%',
+                }}
+                className="w-10 h-10  absolute  bg-red-400 rounded-full"
+            />
         </div>
     );
-};
-
-const Option = ({
-    text,
-    Icon,
-    setOpen,
-}: {
-    text: string;
-    Icon: LucideIcon;
-    setOpen: (p: boolean) => void;
-}) => {
-    return (
-        <motion.li
-            variants={itemVariants}
-            onClick={() => setOpen(false)}
-            className="flex items-center gap-2 w-full p-2 text-xs font-medium whitespace-nowrap rounded-md hover:bg-indigo-100 text-slate-700 hover:text-indigo-500 transition-colors cursor-pointer"
-        >
-            <motion.span variants={actionIconVariants}>
-                <Icon />
-            </motion.span>
-            <span>{text}</span>
-        </motion.li>
-    );
-};
-
-export default StaggeredDropDown;
-
-const wrapperVariants = {
-    open: {
-        scaleY: 1,
-        transition: {
-            when: 'beforeChildren',
-            staggerChildren: 0.1,
-        },
-    },
-    closed: {
-        scaleY: 0,
-        transition: {
-            when: 'afterChildren',
-            staggerChildren: 0.1,
-        },
-    },
-};
-
-const iconVariants = {
-    open: { rotate: 180 },
-    closed: { rotate: 0 },
-};
-
-const itemVariants = {
-    open: {
-        opacity: 1,
-        y: 0,
-        transition: {
-            when: 'beforeChildren',
-        },
-    },
-    closed: {
-        opacity: 0,
-        y: -15,
-        transition: {
-            when: 'afterChildren',
-        },
-    },
-};
-
-const actionIconVariants = {
-    open: { scale: 1, y: 0 },
-    closed: { scale: 0, y: -7 },
 };
