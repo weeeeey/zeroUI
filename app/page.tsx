@@ -10,11 +10,13 @@ import { FitTextLayout } from '@/components/ui/text/fit-text';
 import { VanishLayout } from '@/components/ui/text/vanish';
 import { TrippyHeroLayout } from '@/components/ui/trippy-hero';
 import { WaterDropHeroLayout } from '@/components/ui/water-drop-hero';
+import { MagnetBtn } from '../components/ui/buttons/magnet-btn';
+import { MagnetNav } from '@/components/ui/links/magnet-nav';
 
 const MainPage = () => {
     return (
         <div className="w-full h-full flex justify-center items-center p-20 ">
-            <Aaa />
+            <MagnetNav />
         </div>
     );
 };

@@ -1,7 +1,7 @@
 'use client';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 const arrowRightVariants = {
     hover: {
@@ -9,47 +9,63 @@ const arrowRightVariants = {
     },
 };
 
-const TEXT = 'You can write whatever text you want around this circle';
 interface IMouse {
     x: number;
     y: number;
 }
+const lerp = (start: number, end: number, a: number) =>
+    (end - start) * a + start;
+
 export const MagnetBtn = () => {
-    const [isHover, setIsHover] = useState(false);
-    const [mouse, setMouse] = useState<IMouse>();
+    const [mouse, setMouse] = useState<IMouse>({
+        x: 0,
+        y: 0,
+    });
+    const [delayMouse, setDelayMouse] = useState<IMouse>({
+        x: 0,
+        y: 0,
+    });
     const containerRef = useRef<HTMLDivElement>(null);
+    const buttonRef = useRef<HTMLButtonElement>(null);
+    const animateId = useRef<number>(0);
+
+    const handleMouseMove = (e: React.MouseEvent) => {
+        const x = e.clientX - buttonRef.current?.offsetLeft!;
+        const y = e.clientY - buttonRef.current?.offsetTop!;
+        setMouse({
+            x,
+            y,
+        });
+    };
+
+    const animate = useCallback(() => {
+        const { x, y } = mouse;
+        setDelayMouse({
+            x: lerp(delayMouse.x, x, 0.0005),
+            y: lerp(delayMouse.y, y, 0.0005),
+        });
+
+        animateId.current = window.requestAnimationFrame(animate);
+    }, [mouse, delayMouse]);
+
+    useEffect(() => {
+        animate();
+        return () => {
+            window.cancelAnimationFrame(animateId.current);
+        };
+    }, [animate]);
 
     return (
-        <motion.div
-            ref={containerRef}
-            onPointerMove={(e) => {
-                let x = e.clientX - containerRef.current?.offsetLeft! - 64;
-                let y = e.clientY - containerRef.current?.offsetTop! - 64;
-                if (
-                    x < 0 ||
-                    y < 0 ||
-                    x > containerRef.current?.offsetWidth! ||
-                    y > containerRef.current?.offsetHeight! - 128!
-                )
-                    return;
-                setMouse({
-                    x,
-                    y,
-                });
-            }}
-            onPointerLeave={() => {
-                setMouse({
-                    x: 0,
-                    y: 0,
-                });
-            }}
-            className="w-1/2 h-1/2 bg-red-300"
-        >
+        <motion.div ref={containerRef} className="w-1/2 h-1/2 bg-red-300">
             <motion.button
+                ref={buttonRef}
+                onMouseMove={handleMouseMove}
                 whileHover="hover"
                 style={{
-                    x: mouse?.x,
-                    y: mouse?.y,
+                    x: delayMouse?.x,
+                    y: delayMouse?.y,
+                    translateX: '-50%',
+                    translateY: '-50%',
                 }}
                 className="w-32 h-32 overflow-hidden border-2 border-black rounded-full relative flex justify-center items-center bg-violet-300"
             >
@@ -69,18 +85,6 @@ export const MagnetBtn = () => {
                     transition={{ duration: 0.5 }}
                     className="w-10 h-10 rounded-full bg-white  "
                 />
-                {/* <svg className="absolute top-0 left-0 ">
-                    <circle
-                        id="circle"
-                        cx="2.5rem"
-                        cy="2.5rem"
-                        r="21%"
-                        fill="none"
-                        stroke="black"
-                        strokeWidth="2"
-                    />
-                    <textPath href="#circle">{TEXT}</textPath>
-                </svg> */}
             </motion.button>
         </motion.div>
     );
