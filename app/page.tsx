@@ -12,11 +12,12 @@ import { TrippyHeroLayout } from '@/components/ui/trippy-hero';
 import { WaterDropHeroLayout } from '@/components/ui/water-drop-hero';
 import { MagnetBtn } from '../components/ui/buttons/magnet-btn';
 import { MagnetNav } from '@/components/ui/links/magnet-nav';
+import FlyoutMenu from '@/components/flyout/flyout-menu';
 
 const MainPage = () => {
     return (
         <div className="w-full h-full flex justify-center items-center p-20 ">
-            <MagnetNav />
+            <FlyoutMenu />
         </div>
     );
 };
