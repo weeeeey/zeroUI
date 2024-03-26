@@ -7,6 +7,7 @@ interface FlyOutContextProps {
 interface FlyOutProps {
     children: React.ReactNode;
 }
+
 const FlyOutContext = React.createContext<FlyOutContextProps | undefined>(
     undefined
 );
